@@ -1,7 +1,8 @@
 from pyexpat import model
 from django.db import models
 
-class cars(models.Model):
+
+class car (models.Model):
     brand = models.CharField(max_length= 50)
     model = models.CharField(max_length= 50)
     color = models.CharField(max_length= 50)
@@ -9,4 +10,4 @@ class cars(models.Model):
     yearOfModel = models.DateField()
 
     def __str__(self):
-        return self.brand 
+        return self.brand , self.model

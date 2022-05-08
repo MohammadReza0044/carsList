@@ -1,9 +1,9 @@
-from curses import meta
-from dataclasses import field
 from rest_framework import serializers
-from .models import cars
+from .models import car
 
 class carSerializer (serializers.ModelSerializer):
-    class meta:
-        model = cars
-        field = ['brand','model','color','yearOfModel']
+     class Meta:
+        model = car
+        fields = '__all__'
+
+        
