@@ -13,6 +13,5 @@ class carList (APIView):
     def get (self,request):
         cars = car.objects.all()
         serializer = carSerializer (cars, many = True)
-        token = 'abcd'
         return JsonResponse (serializer.data, safe=False) 
 
