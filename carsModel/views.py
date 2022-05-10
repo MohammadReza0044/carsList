@@ -1,3 +1,4 @@
+from django.http import Http404
 from ast import Try
 from dataclasses import dataclass
 import stat
@@ -27,12 +28,25 @@ class carList (APIView):
 
 
 class car_details (APIView):
+    def get_object(self,pk):
+            try:
+                cars = car.objects.get(pk=pk)
+            except:
+                car.DoesNotExist
+                raise Http404
+            return cars
+    
     def get (self,request,pk):
-        try:
-            cars = car.objects.get(pk=pk)
-        except:
-            car.DoesNotExist
-            return Response (status=status.HTTP_404_NOT_FOUND)
+        cars = self.get_object(pk)
         serializer = carSerializer(cars)
         return Response (serializer.data)
+
+    def put (self, request,pk):
+        cars = self.get_object(pk)
+        serializer = carSerializer(cars,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
