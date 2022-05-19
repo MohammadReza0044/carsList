@@ -1,4 +1,6 @@
+from http.client import responses
 import imp
+from pstats import Stats
 from django.shortcuts import render
 from django.http import Http404
 
@@ -48,3 +50,9 @@ class person_detailView (APIView):
             serialiser.save()
             return Response (serialiser.data, status= status.HTTP_202_ACCEPTED)
         return Response (serialiser.errors, status= status.HTTP_406_NOT_ACCEPTABLE)
+
+    def delete (self, request, pk):
+        persons = self.get_object(pk)
+        serialiser = personSerialiser(persons, data=request.data)
+        persons.delete()
+        return Response (status= status.HTTP_204_NO_CONTENT)

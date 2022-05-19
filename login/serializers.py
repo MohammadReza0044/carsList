@@ -8,7 +8,7 @@ from .models import personalInfo , user
 class personSerialiser(serializers.ModelSerializer):
     class Meta:
         model = personalInfo
-        fields = ['name', 'family', 'phone_number', 'city', 'email']
+        fields = ['id', 'name', 'family', 'phone_number', 'city', 'email']
 
 
 class userSerialiser(serializers.ModelSerializer):
