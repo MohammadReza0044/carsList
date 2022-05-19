@@ -39,3 +39,12 @@ class person_detailView (APIView):
         persons = self.get_object(pk)
         serialiser = personSerialiser(persons)
         return Response (serialiser.data)
+
+    
+    def put (self, request , pk):
+        persons = self.get_object(pk)
+        serialiser = personSerialiser(persons, data= request.data)
+        if serialiser.is_valid():
+            serialiser.save()
+            return Response (serialiser.data, status= status.HTTP_202_ACCEPTED)
+        return Response (serialiser.errors, status= status.HTTP_406_NOT_ACCEPTABLE)
